@@ -9,6 +9,8 @@ const CartList = () => {
       <div className="flex flex-col">
         <Cart />
         <Cart />
+        <Cart />
+        <Cart />
       </div>
       <Pagination />
     </div>
