@@ -7,6 +7,7 @@ import Profile from "../Profile";
 const cinzel = Cinzel({ subsets: ["latin"] });
 
 const Navbar = () => {
+ 
   return (
     <div className=" flex items-center  p-5 justify-between xl:px-20 md:px-10 sm:px-8">
       <div className="hidden md:flex flex-row gap-1  cursor-pointer">

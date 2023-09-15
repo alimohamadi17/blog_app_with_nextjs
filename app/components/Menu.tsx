@@ -66,7 +66,7 @@ const Menu = () => {
         </Link>
       </div>
       {/* NEW ITEM */}
-      <h3 className="text-gray-400">Wchosen by ther editor</h3>
+      <h3 className="text-gray-400">chosen by ther editor</h3>
       <h1 className=" text-2xl font-bold pb-3">Edit Picks</h1>
       <div className="flex  flex-col gap-y-6">
         <Link href={"/"} className="flex items-center">
