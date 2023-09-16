@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Featured from "./components/Featured";
-import Category from "./components/Category";
-import CartList from "./components/CartList";
-import Pagination from "./components/Pagination";
-import Menu from "./components/Menu";
+import Featured from "@/components/Featured";
+import Category from "@/components/Category";
+import CartList from "@/components/CartList";
+import Pagination from "@/components/Pagination";
+import Menu from "@/components/Menu";
 
 export default function Home({ searchParams }: any) {
   return (

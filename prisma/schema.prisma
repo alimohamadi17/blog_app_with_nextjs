@@ -18,7 +18,7 @@ model User {
   Comment   Comment[]
 }
 
-model Categoty {
+model Category {
   id      String  @id @default(cuid()) @map("_id")
   slug    String  @unique
   title   String
@@ -35,7 +35,7 @@ model Post {
   image        String?
   views        Int       @default(0)
   categorySlug String
-  category     Categoty  @relation(fields: [categorySlug], references: [slug])
+  category     Category  @relation(fields: [categorySlug], references: [slug])
   userEmail    String
   user         User      @relation(fields: [userEmail], references: [email])
   comments     Comment[]
