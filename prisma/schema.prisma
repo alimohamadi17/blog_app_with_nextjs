@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid()) @map("_id") @db.ObjectId
+  id        String    @id @default(cuid()) @map("_id")
   email     String    @unique
   createdAt DateTime  @default(now())
   Post      Post[]
@@ -19,15 +19,16 @@ model User {
 }
 
 model Categoty {
-  id    String  @id @default(cuid()) @map("_id") @db.ObjectId
-  slug  String  @unique
-  title String
-  image String?
-  Posts Post[]
+  id      String  @id @default(cuid()) @map("_id")
+  slug    String  @unique
+  title   String
+  bgColor String
+  image   String?
+  Posts   Post[]
 }
 
 model Post {
-  id           String    @id @default(cuid()) @map("_id") @db.ObjectId
+  id           String    @id @default(cuid()) @map("_id")
   slug         String    @unique
   title        String
   description  String
@@ -42,7 +43,7 @@ model Post {
 }
 
 model Comment {
-  id          String   @id @default(cuid()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid()) @map("_id")
   description String
   createdAt   DateTime @default(now())
   userEmail   String
