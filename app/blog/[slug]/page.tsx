@@ -33,10 +33,10 @@ const SinglePage = () => {
           </div>
         </div>
 
-        <div className="flex-1 h-[400px] overflow-hidden border-4 border-gray-300 rounded-md">
+        <div className="flex-1 w-[700px] h-[400px] overflow-hidden border-4 border-gray-300 rounded-md">
           <Image
             src={"/p1.jpeg"}
-            width={600}
+            width={700}
             height={100}
             alt="popular"
             className="object-cover "

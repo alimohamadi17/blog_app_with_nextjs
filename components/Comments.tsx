@@ -1,22 +1,23 @@
 "use client";
 
-import { SignInButton, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Comments = () => {
-  const { userId } = useAuth();
+  const user = "authenticated";
   return (
     <>
       <div className="flex flex-col gap-y-2 pt-5">
         <h1 className=" text-2xl border-b-2 max-w-max">Comments</h1>
 
-        {!userId ? (
-          <p className=" font-bold text-blue-400 border border-blue-300 rounded-full p-2 hover:scale-110 max-w-max">
+        {!user ? (
+          <Link
+            href={"/login"}
+            className=" font-bold text-blue-400 border border-blue-300 rounded-full p-2 hover:scale-110 max-w-max"
+          >
             Login to write comment
-            <SignInButton />
-          </p>
+          </Link>
         ) : (
           <div>
             <input

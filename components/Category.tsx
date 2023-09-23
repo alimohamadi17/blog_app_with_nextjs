@@ -1,4 +1,4 @@
-import { getCategory } from "@/action/getCategories";
+// import { getCategory } from "@/action/getCategories";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -21,7 +21,7 @@ const color = [
 ];
 
 const Category = async () => {
-  const categories = await getCategory();
+  // const categories = await getCategory();
   return (
     <>
       <h1 className="mt-10 mb-10 text-2xl font-bold">Popular Categories</h1>
@@ -30,7 +30,7 @@ const Category = async () => {
                   items-center  justify-around
                   gap-5 "
       >
-        {categories.map((item: CategoryProps) => (
+        {/* {categories.map((item: CategoryProps) => (
           <Link href={"/blog?cat=style"} key={item._id}>
             <div
               className={`bg-${item.bgColor}-300
@@ -50,7 +50,7 @@ const Category = async () => {
               <span>{item.title}</span>
             </div>
           </Link>
-        ))}
+        ))} */}
       </div>
     </>
   );

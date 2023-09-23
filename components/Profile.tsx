@@ -2,15 +2,12 @@
 
 import Link from "next/link";
 import React from "react";
-import UserProfile from "./userButton";
-import { useAuth } from "@clerk/nextjs";
 
 const Profile = () => {
-  const { userId } = useAuth();
-
+  const user = "Authenticated";
   return (
     <div className=" px-2 ">
-      {!userId ? (
+      {user ? (
         <Link href={"/login"}>Login</Link>
       ) : (
         <div className="flex gap-x-2 items-center">
@@ -18,7 +15,6 @@ const Profile = () => {
             Write
           </Link>
           <span>Logout</span>
-          <UserProfile />
         </div>
       )}
     </div>

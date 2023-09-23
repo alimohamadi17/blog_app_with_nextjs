@@ -10,12 +10,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id                 String    @id @default(cuid()) @map("_id")
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id")
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
 model User {
-  id        String    @id @default(cuid()) @map("_id")
-  email     String    @unique
-  createdAt DateTime  @default(now())
-  Post      Post[]
-  Comment   Comment[]
+  id            String    @id @default(cuid()) @map("_id")
+  name          String?
+  email         String    @unique
+  hashPassword  String
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid()) @map("_id")
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
 }
 
 model Category {
@@ -24,30 +67,38 @@ model Category {
   title   String
   bgColor String
   image   String?
-  Posts   Post[]
+  // Posts   Post[]
 }
+
+// model Post {
+//   id           String    @id @default(cuid()) @map("_id")
+//   slug         String    @unique
+//   title        String
+//   description  String
+//   image        String?
+//   views        Int       @default(0)
+//   categorySlug String
+//   category     Category  @relation(fields: [categorySlug], references: [slug])
+//   userEmail    String
+//   user         User      @relation(fields: [userEmail], references: [email])
+//   comments     Comment[]
+//   createdAt    DateTime  @default(now())
+// }
 
 model Post {
-  id           String    @id @default(cuid()) @map("_id")
-  slug         String    @unique
-  title        String
-  description  String
-  image        String?
-  views        Int       @default(0)
-  categorySlug String
-  category     Category  @relation(fields: [categorySlug], references: [slug])
-  userEmail    String
-  user         User      @relation(fields: [userEmail], references: [email])
-  comments     Comment[]
-  createdAt    DateTime  @default(now())
+  id          String   @id @default(cuid()) @map("_id")
+  title       String
+  description String
+  image       String?
+  createdAt   DateTime @default(now())
 }
 
-model Comment {
-  id          String   @id @default(cuid()) @map("_id")
-  description String
-  createdAt   DateTime @default(now())
-  userEmail   String
-  user        User     @relation(fields: [userEmail], references: [email])
-  postSlug    String
-  post        Post     @relation(fields: [postSlug], references: [slug])
-}
+// model Comment {
+//   id          String   @id @default(cuid()) @map("_id")
+//   description String
+//   createdAt   DateTime @default(now())
+//   userEmail   String
+//   user        User     @relation(fields: [userEmail], references: [email])
+//   postSlug    String
+//   // post        Post     @relation(fields: [postSlug], references: [slug])
+// }
