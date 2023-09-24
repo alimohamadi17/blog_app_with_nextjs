@@ -9,7 +9,6 @@ import { ArrowUpTrayIcon, PhotoIcon } from "@heroicons/react/20/solid";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 
 const WritePage = () => {
