@@ -1,7 +1,8 @@
 "use client";
-import React, { FormEvent, useState } from "react";
-import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import React, { useState } from "react";
+import ReactQuill from "react-quill";
+// import dynamic from "next/dynamic";
+// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.bubble.css";
 
 import { ArrowUpTrayIcon, PhotoIcon } from "@heroicons/react/20/solid";
@@ -17,7 +18,6 @@ const WritePage = () => {
   const [title, setTitle] = useState("");
 
   const { data, status } = useSession();
-  console.log(data, status);
 
   const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,6 +29,10 @@ const WritePage = () => {
       body: JSON.stringify({ title, description }),
     });
   };
+
+  if (status === "loading") {
+    return <div className="w-full mx-auto p-10 text-2xl">Loading...</div>;
+  }
   return (
     <>
       {!data?.user ? (

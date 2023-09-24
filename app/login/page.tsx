@@ -12,8 +12,7 @@ import { useRouter } from "next/navigation";
 import React, { useCallback, useState } from "react";
 
 const LogingPage = () => {
-  const session = useSession();
-  console.log(session);
+  const { data, status } = useSession();
 
   const router = useRouter();
 
@@ -47,6 +46,13 @@ const LogingPage = () => {
       console.log(error);
     }
   };
+
+  if (status === "loading") {
+    return <div>loading...</div>;
+  }
+  if (status === "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className="my-10 p-10">

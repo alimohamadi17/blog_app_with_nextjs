@@ -1,16 +1,10 @@
-// import { getCategory } from "@/action/getCategories";
+import { getCategory } from "@/action/getCategories";
+import { CategoryProps } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-interface CategoryProps {
-  _id: string;
-  bgColor: string;
-  slug: string;
-  title: string;
-  image: string;
-}
 const color = [
   "bg-cyan-300",
   "bg-yellow-300",
@@ -21,7 +15,7 @@ const color = [
 ];
 
 const Category = async () => {
-  // const categories = await getCategory();
+  const categories: CategoryProps[] = await getCategory();
   return (
     <>
       <h1 className="mt-10 mb-10 text-2xl font-bold">Popular Categories</h1>
@@ -30,7 +24,7 @@ const Category = async () => {
                   items-center  justify-around
                   gap-5 "
       >
-        {/* {categories.map((item: CategoryProps) => (
+        {categories.map((item) => (
           <Link href={"/blog?cat=style"} key={item._id}>
             <div
               className={`bg-${item.bgColor}-300
@@ -50,7 +44,7 @@ const Category = async () => {
               <span>{item.title}</span>
             </div>
           </Link>
-        ))} */}
+        ))}
       </div>
     </>
   );

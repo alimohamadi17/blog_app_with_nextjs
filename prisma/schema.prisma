@@ -11,43 +11,52 @@ datasource db {
 }
 
 model Account {
-  id                 String    @id @default(cuid()) @map("_id")
-  userId             String
-  providerType       String
-  providerId         String
-  providerAccountId  String
-  refreshToken       String?
-  accessToken        String?
-  accessTokenExpires DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  user               User      @relation(fields: [userId], references: [id])
+  id                String   @id @default(cuid()) @map("_id")
+  userId            String   @map("user_id")
+  type              String?
+  provider          String
+  providerAccountId String   @map("provider_account_id")
+  token_type        String?
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  scope             String?
+  id_token          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([providerId, providerAccountId])
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
   id           String   @id @default(cuid()) @map("_id")
-  userId       String
+  userId       String?  @map("user_id")
+  sessionToken String   @unique @map("session_token")
+  accessToken  String?  @map("access_token")
   expires      DateTime
-  sessionToken String   @unique
-  accessToken  String   @unique
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
 }
 
 model User {
   id            String    @id @default(cuid()) @map("_id")
-  name          String?
-  email         String    @unique
-  hashPassword  String
-  emailVerified DateTime?
+  name          String
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  Post          Post[]
+  Comment       Comment[]
+
+  @@map("users")
 }
 
 model VerificationRequest {
@@ -67,38 +76,30 @@ model Category {
   title   String
   bgColor String
   image   String?
-  // Posts   Post[]
+  Posts   Post[]
 }
-
-// model Post {
-//   id           String    @id @default(cuid()) @map("_id")
-//   slug         String    @unique
-//   title        String
-//   description  String
-//   image        String?
-//   views        Int       @default(0)
-//   categorySlug String
-//   category     Category  @relation(fields: [categorySlug], references: [slug])
-//   userEmail    String
-//   user         User      @relation(fields: [userEmail], references: [email])
-//   comments     Comment[]
-//   createdAt    DateTime  @default(now())
-// }
 
 model Post {
-  id          String   @id @default(cuid()) @map("_id")
-  title       String
-  description String
-  image       String?
-  createdAt   DateTime @default(now())
+  id           String    @id @default(cuid()) @map("_id")
+  slug         String    @unique
+  title        String
+  description  String
+  image        String?
+  views        Int       @default(0)
+  categorySlug String
+  category     Category  @relation(fields: [categorySlug], references: [slug])
+  userEmail    String
+  user         User      @relation(fields: [userEmail], references: [email])
+  comments     Comment[]
+  createdAt    DateTime  @default(now())
 }
 
-// model Comment {
-//   id          String   @id @default(cuid()) @map("_id")
-//   description String
-//   createdAt   DateTime @default(now())
-//   userEmail   String
-//   user        User     @relation(fields: [userEmail], references: [email])
-//   postSlug    String
-//   // post        Post     @relation(fields: [postSlug], references: [slug])
-// }
+model Comment {
+  id          String   @id @default(cuid()) @map("_id")
+  description String
+  createdAt   DateTime @default(now())
+  userEmail   String
+  user        User     @relation(fields: [userEmail], references: [email])
+  postSlug    String
+  post        Post     @relation(fields: [postSlug], references: [slug])
+}
